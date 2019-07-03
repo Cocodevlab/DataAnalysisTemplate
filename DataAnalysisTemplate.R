@@ -24,3 +24,12 @@ install.packages("ggplot2")
 library(dplyr)
 library(ggplot2)
 
+# Step 3: Read in files
+# Now we're ready to read in the file within the directory. By giving it a name, we can see it show up in our Global
+# Environment and click on it to view the data frame
+dataset = read.csv("Example Data - Sheet1.csv")
+
+
+
+
+
