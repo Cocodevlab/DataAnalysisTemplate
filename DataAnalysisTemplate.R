@@ -65,3 +65,34 @@ clean_dataset$score = transmute(clean_dataset, new_score = case_when (score == 1
 #### Step 5: Descriptive Statistics ####
 
 
+#### Step 6: Visualizing Data ####
+# Let's set up the data into a new dataframe to graph it. Say we're interested in their average score for each phase
+# for each participant:
+performance <- clean_dataset %>%
+  mutate(phase_order = case_when(Phase == "v2.occ2" ~ 1, Phase == "history" ~ 2, Phase == "test" ~ 3)) %>%
+  group_by(Subject_ID, phase_order) %>%
+  summarise(Accuracy = mean(new_score))
+# Line graph
+ggplot(performance, aes(x=phase_order, y=Accuracy)) +
+  geom_point(aes(color=Subject_ID)) +  
+  geom_line(aes(color=Subject_ID)) +
+  geom_hline(yintercept = 0.50, linetype = "dashed") +
+  scale_y_continuous("Accuracy") +
+  scale_x_discrete(limit = c(1, 2, 3)) + 
+  theme_classic() + ggtitle("Performance Across Phases") + theme(plot.title = element_text(hjust = 0.5))
+
+# Now, say we're interested in how everyone performs on average per phase:
+performance <- clean_dataset %>%
+  group_by(Phase) %>%
+  summarise(Accuracy = mean(new_score), SD = sd(new_score), SE = SD/sqrt(length(Subject_ID)))
+# Bar graph
+ggplot(performance, aes(x=Phase, y=Accuracy, fill=Phase)) +
+  geom_bar(stat = "identity") + 
+  geom_hline(yintercept = 0.50, linetype = "dashed") +
+  scale_y_continuous("Accuracy") +
+  theme_classic() + ggtitle("Performance Across Phases") + 
+  geom_errorbar(performance, mapping = aes(ymin = Accuracy-SE, ymax = Accuracy+SE), width = 0.2, size=0.5) +
+  theme(plot.title = element_text(hjust = 0.5), legend.position = "none")
+
+
+
