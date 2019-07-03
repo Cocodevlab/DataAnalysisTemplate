@@ -21,11 +21,13 @@ setwd("~/Documents/GitHub/DataAnalysisTemplate")
 install.packages("dplyr")
 install.packages("ggplot2")
 install.packages("tidyverse")
+install.packages("psych")
 
 # Now let's load our packages in our RScript. NOTE: you have to do this everytime you work in R
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
+library(psych)
 
 
 #### Step 3: Read in files ####
@@ -63,6 +65,8 @@ clean_dataset$score = transmute(clean_dataset, new_score = case_when (score == 1
 
 
 #### Step 5: Descriptive Statistics ####
+table(clean_dataset$Sex)
+describe(clean_dataset$Age_Months)
 
 
 #### Step 6: Visualizing Data ####
