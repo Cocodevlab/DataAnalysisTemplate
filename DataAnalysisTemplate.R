@@ -60,8 +60,8 @@ clean_dataset$score <- as.numeric(clean_dataset$score)
 # Sixth, rename values in a column using dataframe$old_column = transmute(dataframe, new_column = 
 # case_when(old_column == old_value ~ new_value))
 # NOTE: If you want to just create a new column but not replace the old one, do the following
-# clean_dataset <- mutate(clean_dataset, new_score = case_when(score == 1 ~ 0, score == 2 ~ 1))
-clean_dataset$score = transmute(clean_dataset, new_score = case_when (score == 1 ~ 0, score == 2 ~ 1))
+clean_dataset <- mutate(clean_dataset, new_score = case_when(score == 1 ~ 0, score == 2 ~ 1))
+#clean_dataset$score = transmute(clean_dataset, new_score = case_when (score == 1 ~ 0, score == 2 ~ 1))
 
 
 #### Step 5: Descriptive Statistics ####
